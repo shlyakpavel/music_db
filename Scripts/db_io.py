@@ -18,18 +18,28 @@ class IO:
     
     path = "./database.txt"
     file = None
-    
-    def setpath(self, path_str):
-        self.path=path_str
+    status = "NA"
         
-    def load(self, file_path = path):
+    def load(self, file_path = None):
         """Function to load database from file
         Args:
             file_path - not requied if already set
         Author: Pavel"""
+        if (file_path == None):
+            file_path = self.path
+        else:
+            self.path = file_path
         #Read only (for the case we don't need output operations)
-        file = open('text.txt', 'w+')
+        print("I: Attempting to open file: " + file_path)
+        self.file = open(file_path, 'r+')
         db = db_create()
+        content = self.file.read()
+        for entry_data in content.split("какаха"):#Спасибо, Маша
+            params = entry_data.splitlines()[1::2];
+            values = entry_data.splitlines()[2::2];
+            entry = db_form_entry(params, values)
+            db_add_entry(db, entry)
+        self.status = "open"
         return db
     
     def save(self, db):
