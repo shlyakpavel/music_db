@@ -19,7 +19,7 @@ def db_add_entry(db, value):
     """
     unique_id = hash(str(value))
     db[unique_id] = value
-    return 0
+    return unique_id
 
 def db_form_entry(params, values):
     """ This function forms an entry
@@ -70,14 +70,21 @@ def db_list_greater_than(db, param, value):
             found.append(db[current_entry])
     return found
 
-def db_set_entry_value(entry, param, value):
+def db_set_entry_value(db, key, param, value):
     """ This function is used to edit an entry value.
     Args:
-        entry - database entry
-        param
+        db - database
+        key - hash
+        param - param to change
+        value - new param value
     Author: Pavel
         """
-    entry[param] = value
+    db[key][param] = value
+    unique_id = hash(str(db[key][param]))
+    db[unique_id]=db[key]
+    del db[key]
+    return unique_id
+    
 """db = db_create()
 params = {"artist"}
 entry = db_form_entry(params,{"String"})
