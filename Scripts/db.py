@@ -85,6 +85,18 @@ def db_set_entry_value(db, key, param, value):
     del db[key]
     return unique_id
     
+def db_to_str_list(db):
+    """ Useless KOSTYL
+    TODO: Rewrite
+    Authors: Pavel, Andrew
+    """
+    trash = []
+    out = []
+    for a in db.values():
+        trash.append(tuple(a.values()))
+    for args in trash:
+        out.append('{0:<25} {1:>25} {2:>25} {3:>25}'.format(*args))
+    return out;
 """db = db_create()
 params = {"artist"}
 entry = db_form_entry(params,{"String"})
