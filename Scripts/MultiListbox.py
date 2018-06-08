@@ -48,7 +48,8 @@ class MultiListbox(PanedWindow):
 
     def _select(self, y, state=16):
         row = self.lists[0].nearest(y)
-        if state == 16: self.selection_clear(0, END)
+        if state == 16:
+            self.selection_clear(0, END)
         self.selection_set(row)
 ##        print(self.curselection())
         return 'break'
@@ -129,11 +130,16 @@ class MultiListbox(PanedWindow):
 
 
     def insert(self, index, *elements):
+        """Insert an element
+        Args:
+            index - index where to insert it
+            elements - tuple like
+                (('Twenty one pilots', 'Heathens', 'Suicide Squad'),)
+        Author: Pavel
+        """
         for element in elements:
-            col_num = 0
-            for current_list in self.lists:
-                current_list.insert(index, element[col_num])
-                col_num+=1
+            for current_column, current_list in enumerate(self.lists):
+                current_list.insert(index, element[current_column])
 
 
     def size(self):
