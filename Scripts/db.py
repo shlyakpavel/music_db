@@ -81,7 +81,7 @@ def db_set_entry_value(db, key, param, value):
         """
     db[key][param] = value
     unique_id = hash(str(db[key][param]))
-    db[unique_id]=db[key]
+    db[unique_id] = db[key]
     del db[key]
     return unique_id
     
@@ -92,15 +92,8 @@ def db_to_str_list(db):
     """
     trash = []
     out = []
-    for a in db.values():
-        trash.append(tuple(a.values()))
+    for element in db.values():
+        trash.append(tuple(element.values()))
     for args in trash:
         out.append('{0:<25} {1:>25} {2:>25} {3:>25}'.format(*args))
-    return out;
-"""db = db_create()
-params = {"artist"}
-entry = db_form_entry(params,{"String"})
-db_add_entry(db,entry)
-db_add_entry(db,db_form_entry(params,{"String2"}))
-db_add_entry(db,db_form_entry(params,{"String"}))
-found = db_find_strict(db, {"artist":"String"})"""
+    return out
