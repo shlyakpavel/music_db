@@ -9,12 +9,18 @@ class MultiListbox(PanedWindow):
     Author: Pavel Shlyak"""
     direction = True
     def __init__(self, master, lists):
+        """MultiListbox class constructor
+        Args:
+            master - parent view
+            lists - columns
+        Author: Pavel"""
         PanedWindow.__init__(self, master, borderwidth=1, showhandle=False, sashwidth=2, sashpad=0, relief=SUNKEN)
         self.lists = []
         self.columns = []
         for l, w in lists:
             self.columns.append(l)
-            frame = Frame(self); frame.pack(side=LEFT, expand=YES, fill=BOTH)
+            frame = Frame(self)
+            frame.pack(side=LEFT, expand=YES, fill=BOTH)
             tl = Label(frame, text=l, borderwidth=2, relief=GROOVE)
             tl.pack(fill=X)
             tl.bind('<Button-1>', self.clickon)
@@ -42,7 +48,7 @@ class MultiListbox(PanedWindow):
 
     def _select(self, y, state=16):
         row = self.lists[0].nearest(y)
-        if state==16:self.selection_clear(0, END)
+        if state == 16: self.selection_clear(0, END)
         self.selection_set(row)
 ##        print(self.curselection())
         return 'break'
@@ -55,22 +61,25 @@ class MultiListbox(PanedWindow):
 
 
     def _b2motion(self, x, y):
-        for l in self.lists:
-            l.scan_dragto(x, y)
+        for current_list in self.lists:
+            current_list.scan_dragto(x, y)
         return 'break'
 
 
     def _scroll(self, *args):
-        for l in self.lists:
-            l.yview(*args)
+        """Private scroll method to scroll all lists at once
+        Author: Pavel"""
+        for current_list in self.lists:
+            current_list.yview(*args)
         return 'break'
 
 
-    def clickon(self,e):
-        self._sortBy(self.columns.index(e.widget['text']))
+    def clickon(self, event):
+        """A sort button handler"""
+        self._sort_by(self.columns.index(event.widget['text']))
 
 
-    def _sortBy(self, column):
+    def _sort_by(self, column):
         """ Sort by a given column. """
         if column == self.sorted_by:
             direction = not self.direction
@@ -81,7 +90,7 @@ class MultiListbox(PanedWindow):
         self.delete(0, END)
         #elements = list(elements)
         #elements.sort(lambda x, y: self._sortAssist(column, direction, x, y))
-        elements.sort(reverse=direction)
+        elements.sort(reverse=direction, key=lambda elements: elements[column])
         self.insert(END, *elements)
 
         self.sorted_by = column
@@ -120,11 +129,11 @@ class MultiListbox(PanedWindow):
 
 
     def insert(self, index, *elements):
-        for e in elements:
-            i = 0
+        for element in elements:
+            col_num = 0
             for current_list in self.lists:
-                current_list.insert(index, e[i])
-                i = i + 1
+                current_list.insert(index, element[col_num])
+                col_num+=1
 
 
     def size(self):
@@ -150,18 +159,24 @@ class MultiListbox(PanedWindow):
 
 
     def selection_set(self, first, last=None):
-        for l in self.lists:
-            l.selection_set(first, last)
+        """Set selection on a line or a line sequence
+        Args:
+            first - the first line of the selection area
+            last - the last line of the selection area (optional)
+        Author: Pavel
+        """
+        for current_list in self.lists:
+            current_list.selection_set(first, last)
         print(self.curselection())
 
 
 if __name__ == '__main__':
-    tk = Tk()
-    Label(tk, text='MultiListbox').pack(side=TOP)
-    MLB = MultiListbox(tk, (('Subject', 40), ('Sender', 20), ('Date', 10)))
+    ROOT = Tk()
+    Label(ROOT, text='MultiListbox').pack(side=TOP)
+    MLB = MultiListbox(ROOT, (('Subject', 40), ('Sender', 20), ('Date', 10)))
     for i in range(5000):
         MLB.insert(END,
                    ('Important Message: %d' % i, 'John Doe %d' % (10000 - i),
                     '10/10/%04d' % (1900+i)))
         MLB.pack(expand=YES, fill=BOTH, side=TOP)
-    tk.mainloop()
+    ROOT.mainloop()
