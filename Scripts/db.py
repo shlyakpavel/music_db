@@ -84,16 +84,16 @@ def db_set_entry_value(db, key, param, value):
     db[unique_id] = db[key]
     del db[key]
     return unique_id
-    
-def db_to_str_list(db):
-    """ Useless KOSTYL
-    TODO: Rewrite
-    Authors: Pavel, Andrew
-    """
-    trash = []
-    out = []
-    for element in db.values():
-        trash.append(tuple(element.values()))
-    for args in trash:
-        out.append('{0:<25} {1:>25} {2:>25} {3:>25}'.format(*args))
-    return out
+
+#def db_to_str_list(db):
+#    """ Useless KOSTYL
+#    TODO: Rewrite
+#    Authors: Pavel, Andrew
+#    """
+#    trash = []
+#    out = []
+#    for element in db.values():
+#        trash.append(tuple(element.values()))
+#    for args in trash:
+#        out.append('{0:<25} {1:>25} {2:>25} {3:>25}'.format(*args))
+#    return out
