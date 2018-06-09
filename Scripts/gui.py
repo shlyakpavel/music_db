@@ -43,11 +43,11 @@ class Application(tk.Frame):
         self.toolbar.pack(side=BOTTOM, fill=X)
 
         keys = ((i, 0) for i in db_get_keys(DB))
-        self.table = MultiListbox(self, keys)
+        self.table = MultiListbox(ROOT, keys)
         del keys
         for i in DB.values():
             self.table.insert(END, tuple(i.values()))
-        self.table.pack(expand=YES, fill=BOTH, side=BOTTOM)
+            self.table.pack(expand=YES, fill=BOTH, side=BOTTOM)
 
     def say_hi(self):
         """A simple method to show that button is pressed
