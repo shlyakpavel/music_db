@@ -47,7 +47,7 @@ class Application(tk.Frame):
         del keys
         for i in DB.values():
             self.table.insert(END, tuple(i.values()))
-            self.table.pack(expand=YES, fill=BOTH, side=BOTTOM)
+        self.table.pack(expand=YES, fill=BOTH, side=BOTTOM)
 
     def say_hi(self):
         """A simple method to show that button is pressed
