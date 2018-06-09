@@ -11,11 +11,23 @@ def db_load(path):
         path - path to db file
     Returns:
         Database
+    Author: Pavel
     """
     file = open(path, "rb")
-    DB = pickle.load(file)
+    database = pickle.load(file)
     file.close()
-    return DB
+    return database
+
+def db_store(database, path):
+    """A fucntion to store all db data with pickle
+    Args:
+        DATABASE - local database var
+        path - path to db file
+    Author: Pavel
+    """
+    file = open(path, "wb")
+    pickle.dump(database, file)
+    file.close()
 
 def db_create():
     """
@@ -98,7 +110,7 @@ def db_set_entry_value(db, key, param, value):
     del db[key]
     return unique_id
 
-def db_get_keys(db):
+def db_get_keys(database):
     """This function returns all the keys avaible in DataBase
     This should be extremely helpfull in GUI
     Args:
@@ -107,8 +119,8 @@ def db_get_keys(db):
         List of keys
     """
     all_keys = []
-    for i in db:
-        for j in db[i].keys():
+    for i in database:
+        for j in database[i].keys():
             if j not in all_keys:
                 all_keys.append(j)
     return all_keys
