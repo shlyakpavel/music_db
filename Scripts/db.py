@@ -3,6 +3,19 @@
 This is basic db module used to manage db in ram:
     Create, edit, compare and delete entries
 """
+import pickle #To store db in FS and load it back
+
+def db_load(path):
+    """A function to load db
+    Args:
+        path - path to db file
+    Returns:
+        Database
+    """
+    file = open(path, "rb")
+    DB = pickle.load(file)
+    file.close()
+    return DB
 
 def db_create():
     """
@@ -84,6 +97,21 @@ def db_set_entry_value(db, key, param, value):
     db[unique_id] = db[key]
     del db[key]
     return unique_id
+
+def db_get_keys(db):
+    """This function returns all the keys avaible in DataBase
+    This should be extremely helpfull in GUI
+    Args:
+        DB - database
+    Returns:
+        List of keys
+    """
+    all_keys = []
+    for i in db:
+        for j in db[i].keys():
+            if j not in all_keys:
+                all_keys.append(j)
+    return all_keys
 
 #def db_to_str_list(db):
 #    """ Useless KOSTYL

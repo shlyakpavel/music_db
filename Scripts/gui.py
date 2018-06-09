@@ -4,10 +4,10 @@ However, custom widgets can be stored in external modules
 """
 import tkinter as tk
 from tkinter import END, BOTH, TOP, YES
-import pickle
 from MultiListbox import MultiListbox
+from db import db_get_keys, db_load
 
-DB = pickle.load(open("db.pickle", "rb"))
+DB = db_load("db.pickle")
 
 class Application(tk.Frame):
     """Main application class.
@@ -29,10 +29,10 @@ class Application(tk.Frame):
         self.quit = tk.Button(self, text="QUIT", fg="red",
                               command=ROOT.destroy)
         self.quit.pack(side="bottom")
-        self.table = MultiListbox(self, (('Interpreter', 40), ('Song', 20), ('Album', 10)))
+        keys = zip(db_get_keys(DB),[40,20,20,20]) #TODO: automatic sizes
+        self.table = MultiListbox(self, list(keys))
         for i in DB.values():
-            self.table.insert(END,
-                              (i['interpreter'], i['song'], i['album']))
+            self.table.insert(END, tuple(i.values()))
         self.table.pack(expand=YES, fill=BOTH, side=TOP)
         #self.box = tk.Listbox(self);
         #self.box.pack(side="bottom")
