@@ -31,6 +31,11 @@ class Application(tk.Frame):
         self.remove_button = Button(self.toolbar, relief=FLAT, command=ROOT.destroy)
         self.remove_button["text"] = "-"
         self.remove_button.pack(side=LEFT, padx=2, pady=2)
+        
+        self.search_button = Button(self.toolbar, relief=FLAT, command=ROOT.destroy)
+        self.search_button["text"] = "Search" #TODO: icon
+        self.search_button.pack(side=LEFT, padx=2, pady=2)
+        
         #Idk what it is for
         exit_button = Button(self.toolbar, fg="red", relief=FLAT, command=ROOT.destroy)
         exit_button["text"] = "Quit"
@@ -50,5 +55,6 @@ class Application(tk.Frame):
         print("hi there, everyone!")
 
 ROOT = tk.Tk()
+ROOT.title('MYSQL killer for music')
 APP = Application(master=ROOT)
 APP.mainloop()
