@@ -3,7 +3,8 @@ Everything that is drown by our app should be done here
 However, custom widgets can be stored in external modules
 """
 import tkinter as tk
-from tkinter import END, BOTH, TOP, YES
+from tkinter import END, BOTH, TOP, RIGHT, BOTTOM, LEFT, RAISED, Button, Frame, \
+    X, FLAT, YES
 from MultiListbox import MultiListbox
 from db import db_get_keys, db_load
 
@@ -21,24 +22,28 @@ class Application(tk.Frame):
         """A method to draw the interface
         Should be only called in class constructor
         Author: Pavel"""
-        self.hi_there = tk.Button(self)
-        self.hi_there["text"] = "Hello World\n(click me)"
-        self.hi_there["command"] = self.say_hi
-        self.hi_there.pack(side=TOP)
+        self.toolbar = Frame(self.master, bd=1, relief=RAISED)
+        #A button to add new song
+        self.add_button = Button(self.toolbar, relief=FLAT, command=ROOT.destroy)
+        self.add_button["text"] = "+"
+        self.add_button.pack(side=LEFT, padx=2, pady=2)
+        #A button to remove a song
+        self.remove_button = Button(self.toolbar, relief=FLAT, command=ROOT.destroy)
+        self.remove_button["text"] = "-"
+        self.remove_button.pack(side=LEFT, padx=2, pady=2)
+        #Idk what it is for
+        exit_button = Button(self.toolbar, fg="red", relief=FLAT, command=ROOT.destroy)
+        exit_button["text"] = "Quit"
+        exit_button.pack(side=RIGHT, padx=2, pady=2)
+        self.toolbar.pack(side=BOTTOM, fill=X)
 
-        self.quit = tk.Button(self, text="QUIT", fg="red",
-                              command=ROOT.destroy)
-        self.quit.pack(side="bottom")
-        keys = zip(db_get_keys(DB),[40,20,20,20]) #TODO: automatic sizes
-        self.table = MultiListbox(self, list(keys))
+        keys = ((i, 0) for i in db_get_keys(DB))
+        self.table = MultiListbox(self, keys)
+        del keys
         for i in DB.values():
             self.table.insert(END, tuple(i.values()))
-        self.table.pack(expand=YES, fill=BOTH, side=TOP)
-        #self.box = tk.Listbox(self);
-        #self.box.pack(side="bottom")
-        #for i in db_to_str_list(db):
-        #    print(i)
-        #    self.box.insert(1,i)
+        self.table.pack(expand=YES, fill=BOTH, side=BOTTOM)
+
     def say_hi(self):
         """A simple method to show that button is pressed
         Author: unknown hacker"""
