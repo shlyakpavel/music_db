@@ -1,4 +1,6 @@
-from tkinter import PanedWindow, Frame, Tk, Label, TOP, SUNKEN, LEFT, YES, BOTH, GROOVE, X, Listbox, FLAT, FALSE, MULTIPLE, Scrollbar, VERTICAL, Y, RIGHT, NO, END, SCROLL, PAGES
+from tkinter import PanedWindow, Frame, Tk, Label, TOP, SUNKEN, LEFT,\
+    YES, BOTH, GROOVE, X, Listbox, FLAT, FALSE, MULTIPLE, Scrollbar, VERTICAL,\
+    Y, RIGHT, NO, END, SCROLL, PAGES
 
 #def cmp(a, b):
 #    """python 3 replacement for python 2 cmp function"""
