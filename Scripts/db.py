@@ -46,6 +46,13 @@ def db_add_entry(db, value):
     db[unique_id] = value
     return unique_id
 
+def db_delete_entry(db, index):
+    """
+    This function is supposed to add db entries
+    Author: Pavel
+    """
+    del db[index]
+
 def db_form_entry(params, values):
     """ This function forms an entry
     Args:
@@ -66,17 +73,17 @@ def db_find_strict(db, params):
               param2 : value2... }
             }
     Attention! The entry will be returned only if ALL the params match their values
-    Returns a list of entries(dics) or an empty list
+    Returns a dict of entries(dics) or an empty list
     Author: Pavel
     """
-    found = [] #This list will store all the matching entries
+    found = {} #This list will store all the matching entries
     for current_entry in db:
         is_ok = 1
         for param in params:
             if db[current_entry][param] != params[param]:
                 is_ok = 0
         if is_ok:
-            found.append(db[current_entry])
+            found[current_entry] = db[current_entry]
     return found
 
 def db_list_greater_than(db, param, value):
