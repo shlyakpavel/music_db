@@ -69,8 +69,8 @@ class Application(tk.Frame):
         """A simple method to show that button is pressed
         Author: unknown hacker"""
         t = tk.Toplevel(self)
-        t.wm_title("Window #%s" % self.counter)
-        l = tk.Label(t, text="This is window #%s" % self.counter)
+        t.wm_title("Window")
+        l = tk.Label(t, text="This is window")
         l.pack(side="top", fill="both", expand=True, padx=100, pady=100)
         
 ROOT = tk.Tk()
