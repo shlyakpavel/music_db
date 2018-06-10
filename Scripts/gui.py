@@ -8,7 +8,9 @@ from tkinter import END, BOTH, RIGHT, BOTTOM, LEFT, RAISED, Button, Frame, \
 from MultiListbox import MultiListbox
 from db import db_get_keys, db_load, db_store, db_find_strict, db_delete_entry, \
     db_create
-from add_dialog import insertion_frame
+from add_dialog import InsertionFrame
+from stframe import InsertionFrame
+
 try:
     DB = db_load("db.pickle")
 except FileNotFoundError:
@@ -66,12 +68,19 @@ class Application(tk.Frame):
             self.table.delete(index)
         
     def add_item(self):
-        """A simple method to show that button is pressed
-        Author: unknown hacker"""
+        """A simple method to add entry
+        Author: Pavel"""
         t = tk.Toplevel(self)
         t.wm_title("Window")
-        #l = tk.Label(t, text="This is window")
-        l = insertion_frame(t)
+        l = InsertionFrame(t)
+        l.pack(side="top", fill="both", expand=True, padx=100, pady=100)
+        
+    def stats(self):
+        """Statistics
+        Author: Pavel"""
+        t = tk.Toplevel(self)
+        t.wm_title("Window")
+        l = StatsFrame(t)
         l.pack(side="top", fill="both", expand=True, padx=100, pady=100)
         
 ROOT = tk.Tk()
