@@ -41,6 +41,10 @@ class Application(tk.Frame):
         self.search_button = Button(self.toolbar, relief=FLAT, command=ROOT.destroy)
         self.search_button["text"] = "Search" #TODO: icon
         self.search_button.pack(side=LEFT, padx=2, pady=2)
+        
+        self.stats_button = Button(self.toolbar, relief=FLAT, command=self.stats)
+        self.stats_button["text"] = "Stats" #TODO: icon
+        self.stats_button.pack(side=LEFT, padx=2, pady=2)
 
         #Idk what it is for
         exit_button = Button(self.toolbar, fg="red", relief=FLAT, command=ROOT.destroy)
