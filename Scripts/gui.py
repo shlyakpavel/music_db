@@ -53,7 +53,7 @@ class Application(tk.Frame):
         items = self.table.curselection()
         for index in items:
             item = self.table.get(index)
-            items_in_db = db_find_strict(DB, dict(zip(list(db_get_keys(DB)),list(item))))
+            items_in_db = db_find_strict(DB, dict(zip(list(db_get_keys(DB)), list(item))))
             print(items_in_db)
             for item_in_db in items_in_db:
                 db_delete_entry(DB, item_in_db)
