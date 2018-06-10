@@ -28,7 +28,7 @@ class Application(tk.Frame):
         Author: Pavel"""
         self.toolbar = Frame(self.master, bd=1, relief=RAISED)
         #A button to add new song
-        self.add_button = Button(self.toolbar, relief=FLAT, command=ROOT.destroy)
+        self.add_button = Button(self.toolbar, relief=FLAT, command=self.add_item)
         self.add_button["text"] = "+"
         self.add_button.pack(side=LEFT, padx=2, pady=2)
         #A button to remove a song
@@ -65,13 +65,14 @@ class Application(tk.Frame):
             #search and delete in db
             self.table.delete(index)
         
-    def say_hi(self):
+    def add_item(self):
         """A simple method to show that button is pressed
         Author: unknown hacker"""
-        print("hi there, everyone!")
+        t = tk.Toplevel(self)
+        t.wm_title("Window #%s" % self.counter)
+        l = tk.Label(t, text="This is window #%s" % self.counter)
+        l.pack(side="top", fill="both", expand=True, padx=100, pady=100)
         
-    
-
 ROOT = tk.Tk()
 ROOT.title('MYSQL killer for music')
 APP = Application(master=ROOT)
