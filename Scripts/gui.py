@@ -6,9 +6,13 @@ import tkinter as tk
 from tkinter import END, BOTH, RIGHT, BOTTOM, LEFT, RAISED, Button, Frame, \
     X, FLAT, YES
 from MultiListbox import MultiListbox
-from db import db_get_keys, db_load, db_store, db_find_strict, db_delete_entry
+from db import db_get_keys, db_load, db_store, db_find_strict, db_delete_entry, \
+    db_create
 
-DB = db_load("db.pickle")
+try:
+    DB = db_load("db.pickle")
+except FileNotFoundError:
+    DB = db_create()
 
 class Application(tk.Frame):
     """Main application class.
@@ -53,7 +57,7 @@ class Application(tk.Frame):
         items = self.table.curselection()
         for index in items:
             item = self.table.get(index)
-            items_in_db = db_find_strict(DB, dict(zip(list(db_get_keys(DB)), list(item))))
+            items_in_db = db_find_strict(DB, dict(zip(db_get_keys(DB), item)))
             print(items_in_db)
             for item_in_db in items_in_db:
                 db_delete_entry(DB, item_in_db)
@@ -65,6 +69,8 @@ class Application(tk.Frame):
         """A simple method to show that button is pressed
         Author: unknown hacker"""
         print("hi there, everyone!")
+        
+    
 
 ROOT = tk.Tk()
 ROOT.title('MYSQL killer for music')
