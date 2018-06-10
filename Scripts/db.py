@@ -132,6 +132,24 @@ def db_get_keys(database):
                 all_keys.append(j)
     return all_keys
 
+def db_mean(database, key):
+    """Mean value for a key
+    Args:
+        database
+        key - examined key (string)
+    Returns:
+        Mean value - signed integer
+    """
+    summa = 0
+    amount = 0
+    for value in database.values():
+        summa+=int(value[key])
+        amount+=1
+    return summa/amount
+
+#def db_leading(database_key):
+#    print()
+
 #def db_to_str_list(db):
 #    """ Useless KOSTYL
 #    TODO: Rewrite
