@@ -9,7 +9,7 @@ from MultiListbox import MultiListbox
 from db import db_get_keys, db_load, db_store, db_find_strict, db_delete_entry, \
     db_create
 from add_dialog import InsertionFrame
-from stframe import InsertionFrame
+from stframe import StatsFrame
 
 try:
     DB = db_load("db.pickle")
@@ -80,7 +80,7 @@ class Application(tk.Frame):
         Author: Pavel"""
         t = tk.Toplevel(self)
         t.wm_title("Window")
-        l = StatsFrame(t)
+        l = StatsFrame(t, DB)
         l.pack(side="top", fill="both", expand=True, padx=100, pady=100)
         
 ROOT = tk.Tk()
