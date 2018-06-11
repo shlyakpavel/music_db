@@ -154,8 +154,22 @@ def db_keys_to_list(database, key):
     return lst
 
 def db_max(database, key):
+    """Maximum value for a key
+    Args:
+        database -satabase
+        key - a key to examine
+    Author: Pavel"""
     lst = db_keys_to_list(database, key)
     return max(lst)
+
+def db_min(database, key):
+    """Minimum value for a key
+    Args:
+        database -satabase
+        key - a key to examine
+    Author: Pavel"""
+    lst = db_keys_to_list(database, key)
+    return min(lst)
     
 
 #def db_leading(database_key):
