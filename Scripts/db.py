@@ -147,6 +147,17 @@ def db_mean(database, key):
         amount+=1
     return summa/amount
 
+def db_keys_to_list(database, key):
+    lst = []
+    for value in database.values():
+        lst.append(int(value[key]))
+    return lst
+
+def db_max(database, key):
+    lst = db_keys_to_list(database, key)
+    return max(lst)
+    
+
 #def db_leading(database_key):
 #    print()
 
