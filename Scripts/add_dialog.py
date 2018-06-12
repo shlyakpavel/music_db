@@ -22,7 +22,7 @@ class InsertionFrame(Frame):
             self.e[i].pack(side=TOP, fill="none", expand=False)
             if prev_item:
                 self.e[i].insert(0,prev_item[i])
-        add_button=Button(master, text="ЖОПА!!!", command=self.obrabotchik)
+        add_button=Button(master, text="Save", command=self.obrabotchik)
         add_button.pack(side=TOP, fill="none", expand=False)
         self.app = app
         
@@ -31,7 +31,6 @@ class InsertionFrame(Frame):
         Author: Andrew
         Edited by Pavel on 12.07
         """
-        print("BAD ASS")
         item = {}
         for i in db_get_keys(self.db):
             item[i] = self.e[i].get()

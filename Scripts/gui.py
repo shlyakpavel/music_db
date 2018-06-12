@@ -42,7 +42,7 @@ class Application(tk.Frame):
         self.edit_button["text"] = "Edit"
         self.edit_button.pack(side=LEFT, padx=2, pady=2)
 
-        self.search_button = Button(self.toolbar, relief=FLAT, command=ROOT.destroy)
+        self.search_button = Button(self.toolbar, relief=FLAT, command=ROOT.destroy) #TODO
         self.search_button["text"] = "Search" #TODO: icon
         self.search_button.pack(side=LEFT, padx=2, pady=2)
 
