@@ -34,24 +34,24 @@ def db_create():
     This function is used to create empty db var (dict of dicts)
     Author: Pavel
     """
-    db = {}
-    return db
+    database = {}
+    return database
 
-def db_add_entry(db, value):
+def db_add_entry(database, value):
     """
     This function is supposed to add db entries
     Author: Pavel
     """
     unique_id = hash(str(value))
-    db[unique_id] = value
+    database[unique_id] = value
     return unique_id
 
-def db_delete_entry(db, index):
+def db_delete_entry(database, index):
     """
     This function is supposed to add db entries
     Author: Pavel
     """
-    del db[index]
+    del database[index]
 
 def db_form_entry(params, values):
     """ This function forms an entry
@@ -64,7 +64,7 @@ def db_form_entry(params, values):
     entry = dict(entry)
     return entry
 
-def db_find_strict(db, params):
+def db_find_strict(database, params):
     """ This function lists all the entries that match the params
     Args:
         db - database, nothing to comment on :D
@@ -77,16 +77,16 @@ def db_find_strict(db, params):
     Author: Pavel
     """
     found = {} #This list will store all the matching entries
-    for current_entry in db:
+    for current_entry in database:
         is_ok = 1
         for param in params:
-            if db[current_entry][param] != params[param]:
+            if database[current_entry][param] != params[param]:
                 is_ok = 0
         if is_ok:
-            found[current_entry] = db[current_entry]
+            found[current_entry] = database[current_entry]
     return found
 
-def db_list_greater_than(db, param, value):
+def db_list_greater_than(database, param, value):
     """ This function lists all the entries with 'param' value is greater
         than the given value
         Args:
@@ -97,24 +97,25 @@ def db_list_greater_than(db, param, value):
         Author: Andrey
     """
     found = [] #This list will store all the matching entries
-    for current_entry in db:
-        if int(db[current_entry][param]) >= value:
-            found.append(db[current_entry])
+    for current_entry in database:
+        if int(database[current_entry][param]) >= value:
+            found.append(database[current_entry])
     return found
 
-def db_set_entry_value(db, key, param, value):
+def db_set_entry_value(database, key, param, value):
     """ This function is used to edit an entry value.
     Args:
         db - database
         key - hash
         param - param to change
         value - new param value
+    Returns: new entry id
     Author: Pavel
-        """
-    db[key][param] = value
-    unique_id = hash(str(db[key][param]))
-    db[unique_id] = db[key]
-    del db[key]
+    """
+    database[key][param] = value
+    unique_id = hash(str(database[key][param]))
+    database[unique_id] = database[key]
+    del database[key]
     return unique_id
 
 def db_get_keys(database):
@@ -143,11 +144,19 @@ def db_mean(database, key):
     summa = 0
     amount = 0
     for value in database.values():
-        summa+=int(value[key])
-        amount+=1
+        summa += int(value[key])
+        amount += 1
     return summa/amount
 
 def db_keys_to_list(database, key):
+    """List all the values for a key in a list
+    Args:
+        database
+        key - text key (e. g. 'year' )
+    Returns:
+        list of values (strings in most cases)
+    Author: Pavel
+    """
     lst = []
     for value in database.values():
         lst.append(value[key])
@@ -172,20 +181,9 @@ def db_min(database, key):
     lst = db_keys_to_list(database, key)
     lst = [int(i) for i in lst]
     return min(lst)
-    
 
-#def db_leading(database_key):
-#    print()
-
-#def db_to_str_list(db):
-#    """ Useless KOSTYL
-#    TODO: Rewrite
-#    Authors: Pavel, Andrew
-#    """
-#    trash = []
-#    out = []
-#    for element in db.values():
-#        trash.append(tuple(element.values()))
-#    for args in trash:
-#        out.append('{0:<25} {1:>25} {2:>25} {3:>25}'.format(*args))
-#    return out
+def db_most(database, key):
+    """Find the most common element in a list
+    Author: Pavel"""
+    lst = db_keys_to_list(database, key)
+    return max(set(lst), key=lst.count)
