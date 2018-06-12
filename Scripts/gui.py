@@ -37,6 +37,10 @@ class Application(tk.Frame):
         self.remove_button = Button(self.toolbar, relief=FLAT, command=self.remove_items)
         self.remove_button["text"] = "-"
         self.remove_button.pack(side=LEFT, padx=2, pady=2)
+        
+        self.edit_button = Button(self.toolbar, relief=FLAT, command=self.edit_item)
+        self.edit_button["text"] = "Edit"
+        self.edit_button.pack(side=LEFT, padx=2, pady=2)
 
         self.search_button = Button(self.toolbar, relief=FLAT, command=ROOT.destroy)
         self.search_button["text"] = "Search" #TODO: icon
@@ -72,14 +76,22 @@ class Application(tk.Frame):
                 print(item_in_db)
             #search and delete in db
             self.table.delete(index)
-
+    def edit_item(self):
+        """A method to open "Edit entry" dialog
+        Author: Pavel"""
+        item = self.table.curselection()[0]
+        t = tk.Toplevel(self)
+        t.wm_title("Add track to DB")
+        l = InsertionFrame(t, self, DB)
+        l.pack(side="top", fill="both", expand=True)
+        
     def add_item(self):
         """A simple method to add entry
         Author: Andrew"""
         t = tk.Toplevel(self)
         t.wm_title("Add track to DB")
         l = InsertionFrame(t, self, DB)
-        l.pack(side="top", fill="both", expand=True, padx=100, pady=100)
+        l.pack(side="top", fill="both", expand=True)
 
     def stats(self):
         """Statistics
@@ -87,7 +99,7 @@ class Application(tk.Frame):
         stats_window = tk.Toplevel(self)
         stats_window.wm_title("Stats")
         stats_frame = StatsFrame(stats_window, DB)
-        stats_frame.pack(side=TOP, fill=BOTH, expand=True, padx=100, pady=100)
+        stats_frame.pack(side=TOP, fill=BOTH, expand=True)
 
     def insert_item(self, item):
         """A so-called slot to insert item as soon as it is created
