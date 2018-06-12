@@ -1,5 +1,5 @@
 from tkinter import Frame, SUNKEN, Label, Button, TOP, BOTH
-from db import db_mean, db_max, db_min
+from db import db_mean, db_max, db_min, db_keys_to_list
 class StatsFrame(Frame):
     """A simple class to manage statistic (show and save to disk)
     Author: Pavel"""
@@ -23,8 +23,28 @@ class StatsFrame(Frame):
         self.data.append(max_year)
         self.max_year_label.pack(side=TOP, fill=BOTH, expand = True)
         
+        min_year = "The eldest song was recorded in %d" % db_min(DB, 'year')
+        self.min_year_label = Label(master, text = min_year)
+        self.data.append(min_year)
+        self.min_year_label.pack(side=TOP, fill=BOTH, expand = True)
+
+        ms_year = "Most songs were recorded in %d" % db_min(DB, 'year') #TODO
+        self.ms_year_label = Label(master, text = ms_year)
+        self.data.append(ms_year)
+        self.ms_year_label.pack(side=TOP, fill=BOTH, expand = True)
+        
+        unique_artists = "Artists: %d" % self.art_count()
+        self.unique_artists_label = Label(master, text = unique_artists)
+        self.data.append(unique_artists)
+        self.unique_artists_label.pack(side=TOP, fill=BOTH, expand = True)
+        
         self.save_btn = Button(master, text="Save", command=self.save)
         self.save_btn.pack(side=TOP, fill=BOTH, expand=True)
+        
+    def art_count(self):
+        lst = db_keys_to_list(self.database,'interpreter')
+        lst = set(lst)
+        return len(lst)
         
     def save(self):
         filename=hash(str(self.database)) 

@@ -150,7 +150,7 @@ def db_mean(database, key):
 def db_keys_to_list(database, key):
     lst = []
     for value in database.values():
-        lst.append(int(value[key]))
+        lst.append(value[key])
     return lst
 
 def db_max(database, key):
@@ -160,6 +160,7 @@ def db_max(database, key):
         key - a key to examine
     Author: Pavel"""
     lst = db_keys_to_list(database, key)
+    lst = [int(i) for i in lst]
     return max(lst)
 
 def db_min(database, key):
@@ -169,6 +170,7 @@ def db_min(database, key):
         key - a key to examine
     Author: Pavel"""
     lst = db_keys_to_list(database, key)
+    lst = [int(i) for i in lst]
     return min(lst)
     
 
