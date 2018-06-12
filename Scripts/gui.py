@@ -7,7 +7,7 @@ from tkinter import END, BOTH, RIGHT, BOTTOM, LEFT, RAISED, Button, Frame, \
     X, FLAT, YES
 from MultiListbox import MultiListbox
 from db import db_get_keys, db_load, db_store, db_find_strict, db_delete_entry, \
-    db_create
+    db_create, db_add_entry
 from add_dialog import InsertionFrame
 from stframe import StatsFrame
 
@@ -73,10 +73,10 @@ class Application(tk.Frame):
         
     def add_item(self):
         """A simple method to add entry
-        Author: Pavel"""
+        Author: Andrew"""
         t = tk.Toplevel(self)
-        t.wm_title("Window")
-        l = InsertionFrame(t)
+        t.wm_title("Add track to DB")
+        l = InsertionFrame(t, self , DB)
         l.pack(side="top", fill="both", expand=True, padx=100, pady=100)
         
     def stats(self):
@@ -86,6 +86,12 @@ class Application(tk.Frame):
         t.wm_title("Window")
         l = StatsFrame(t, DB)
         l.pack(side="top", fill="both", expand=True, padx=100, pady=100)
+
+    def insert_item(self,item):
+        """A so-called slot to insert item as soon as it is created
+        Author: Andrew"""
+        db_add_entry(DB, item)
+        self.table.insert(END, tuple(item.values()))
         
 ROOT = tk.Tk()
 ROOT.title('MYSQL killer for music')
