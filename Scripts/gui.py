@@ -76,13 +76,21 @@ class Application(tk.Frame):
                 print(item_in_db)
             #search and delete in db
             self.table.delete(index)
+
     def edit_item(self):
         """A method to open "Edit entry" dialog
         Author: Pavel"""
-        item = self.table.curselection()[0]
+        
+        edit_indexes = self.table.curselection()
+        if not edit_indexes:
+            return
+        self.edit_index = edit_indexes [0]
+        item = self.table.get(self.edit_index)
+        item = list(db_find_strict(DB, dict(zip(db_get_keys(DB), item))).values())[0]
+        print(item)
         t = tk.Toplevel(self)
         t.wm_title("Add track to DB")
-        l = InsertionFrame(t, self, DB)
+        l = InsertionFrame(t, self, DB, item)
         l.pack(side="top", fill="both", expand=True)
         
     def add_item(self):
@@ -101,11 +109,17 @@ class Application(tk.Frame):
         stats_frame = StatsFrame(stats_window, DB)
         stats_frame.pack(side=TOP, fill=BOTH, expand=True)
 
-    def insert_item(self, item):
+    def insert_item(self, item, prev_item):
         """A so-called slot to insert item as soon as it is created
         Author: Andrew"""
+        where = END
+        if prev_item:
+            to_delete = list(db_find_strict(DB, prev_item))[0]
+            db_delete_entry(DB, to_delete)
+            self.table.delete(self.edit_index)
+            where = self.edit_index
         db_add_entry(DB, item)
-        self.table.insert(END, tuple(item.values()))
+        self.table.insert(where, tuple(item.values()))
 
 ROOT = tk.Tk()
 ROOT.title('MYSQL killer for music')
