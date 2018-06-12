@@ -4,7 +4,7 @@ However, custom widgets can be stored in external modules
 """
 import tkinter as tk
 from tkinter import END, BOTH, RIGHT, BOTTOM, LEFT, RAISED, Button, Frame, \
-    X, FLAT, YES
+    X, FLAT, YES, TOP
 from MultiListbox import MultiListbox
 from db import db_get_keys, db_load, db_store, db_find_strict, db_delete_entry, \
     db_create, db_add_entry
@@ -41,7 +41,7 @@ class Application(tk.Frame):
         self.search_button = Button(self.toolbar, relief=FLAT, command=ROOT.destroy)
         self.search_button["text"] = "Search" #TODO: icon
         self.search_button.pack(side=LEFT, padx=2, pady=2)
-        
+
         self.stats_button = Button(self.toolbar, relief=FLAT, command=self.stats)
         self.stats_button["text"] = "Stats" #TODO: icon
         self.stats_button.pack(side=LEFT, padx=2, pady=2)
@@ -60,6 +60,8 @@ class Application(tk.Frame):
         self.table.pack(expand=YES, fill=BOTH, side=BOTTOM)
 
     def remove_items(self):
+        """A method to delete item then - button is pressed
+        Author: Pavel"""
         items = self.table.curselection()
         for index in items:
             item = self.table.get(index)
@@ -70,29 +72,29 @@ class Application(tk.Frame):
                 print(item_in_db)
             #search and delete in db
             self.table.delete(index)
-        
+
     def add_item(self):
         """A simple method to add entry
         Author: Andrew"""
         t = tk.Toplevel(self)
         t.wm_title("Add track to DB")
-        l = InsertionFrame(t, self , DB)
+        l = InsertionFrame(t, self, DB)
         l.pack(side="top", fill="both", expand=True, padx=100, pady=100)
-        
+
     def stats(self):
         """Statistics
         Author: Pavel"""
-        t = tk.Toplevel(self)
-        t.wm_title("Window")
-        l = StatsFrame(t, DB)
-        l.pack(side="top", fill="both", expand=True, padx=100, pady=100)
+        stats_window = tk.Toplevel(self)
+        stats_window.wm_title("Stats")
+        stats_frame = StatsFrame(stats_window, DB)
+        stats_frame.pack(side=TOP, fill=BOTH, expand=True, padx=100, pady=100)
 
-    def insert_item(self,item):
+    def insert_item(self, item):
         """A so-called slot to insert item as soon as it is created
         Author: Andrew"""
         db_add_entry(DB, item)
         self.table.insert(END, tuple(item.values()))
-        
+
 ROOT = tk.Tk()
 ROOT.title('MYSQL killer for music')
 APP = Application(master=ROOT)
