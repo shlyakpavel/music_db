@@ -4,7 +4,7 @@ However, custom widgets can be stored in external modules
 """
 import tkinter as tk
 from tkinter import END, BOTH, RIGHT, BOTTOM, LEFT, RAISED, Button, Frame, \
-    X, FLAT, YES, TOP
+    X, YES, TOP
 from MultiListbox import MultiListbox
 from db import db_get_keys, db_load, db_store, db_find_strict, db_delete_entry, \
     db_create, db_add_entry
@@ -30,28 +30,28 @@ class Application(tk.Frame):
         Author: Pavel"""
         self.toolbar = Frame(self.master, bd=1, relief=RAISED)
         #A button to add new song
-        self.add_button = Button(self.toolbar, relief=FLAT, command=self.add_item)
+        self.add_button = Button(self.toolbar, command=self.add_item)
         self.add_button["text"] = "+"
         self.add_button.pack(side=LEFT, padx=2, pady=2)
         #A button to remove a song
-        self.remove_button = Button(self.toolbar, relief=FLAT, command=self.remove_items)
+        self.remove_button = Button(self.toolbar, command=self.remove_items)
         self.remove_button["text"] = "-"
         self.remove_button.pack(side=LEFT, padx=2, pady=2)
         
-        self.edit_button = Button(self.toolbar, relief=FLAT, command=self.edit_item)
+        self.edit_button = Button(self.toolbar, command=self.edit_item)
         self.edit_button["text"] = "Edit"
         self.edit_button.pack(side=LEFT, padx=2, pady=2)
 
-        self.search_button = Button(self.toolbar, relief=FLAT, command=ROOT.destroy) #TODO
+        self.search_button = Button(self.toolbar, command=ROOT.destroy) #TODO
         self.search_button["text"] = "Search" #TODO: icon
         self.search_button.pack(side=LEFT, padx=2, pady=2)
 
-        self.stats_button = Button(self.toolbar, relief=FLAT, command=self.stats)
+        self.stats_button = Button(self.toolbar, command=self.stats)
         self.stats_button["text"] = "Stats" #TODO: icon
         self.stats_button.pack(side=LEFT, padx=2, pady=2)
 
         #Idk what it is for
-        exit_button = Button(self.toolbar, fg="red", relief=FLAT, command=ROOT.destroy)
+        exit_button = Button(self.toolbar, fg="red", command=ROOT.destroy)
         exit_button["text"] = "Quit"
         exit_button.pack(side=RIGHT, padx=2, pady=2)
         self.toolbar.pack(side=BOTTOM, fill=X)
