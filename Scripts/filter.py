@@ -30,6 +30,10 @@ class FilterFrame(Frame):
         It doesn't set masks or ranges yet #TODO: fix
         Author: Pavel
         """
+        #Add only if previous item is done correctly
+        if self.filter_count:
+            if (not self.filters[-1]['criteria'].get()) or (not self.filters[-1]['field'].get()):
+                return
         field = StringVar(self)
         criteria = StringVar(self)
         #variable.set("one") # default value
