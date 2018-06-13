@@ -33,7 +33,7 @@ class FilterFrame(Frame):
         field = StringVar(self)
         criteria = StringVar(self)
         #variable.set("one") # default value
-        fields = OptionMenu(self, field, *db_get_keys(self.database))
+        fields = OptionMenu(self, field, '', *db_get_keys(self.database))
         fields.grid(row=self.filter_count, column=1)
         criteria_box = OptionMenu(self, criteria, *self.citeria_dict.keys())
         criteria_box.grid(row=self.filter_count, column=2)
@@ -57,4 +57,4 @@ class FilterFrame(Frame):
                 new_db = self.citeria_dict[criteria](new_db, field, data)
         self.app.apply_db(new_db)
 
-    citeria_dict = {"Greater then":gt, "Less then": lt, "Is equal to" : eq, "Includes":inc}
+    citeria_dict = {">":gt, "<": lt, "=" : eq, "Includes":inc}

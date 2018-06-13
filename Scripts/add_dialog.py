@@ -1,9 +1,8 @@
-
 from tkinter import Frame, SUNKEN, Label, Entry, Button, TOP
 from db import db_get_keys
 class InsertionFrame(Frame):
     """
-        
+
     Author:Andrew
     """
     e = {}
@@ -23,7 +22,7 @@ class InsertionFrame(Frame):
         add_button=Button(master, text="Save", command=self.obrabotchik)
         add_button.pack(side=TOP, fill="none", expand=False)
         self.app = app
-        
+
     def obrabotchik(self):
         """This method is called then button is clicked
         Author: Andrew
@@ -33,4 +32,4 @@ class InsertionFrame(Frame):
         for i in db_get_keys(self.db):
             item[i] = self.e[i].get()
         self.app.insert_item(item, self.prev_item)
-        
+

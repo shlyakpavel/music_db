@@ -21,7 +21,7 @@ except FileNotFoundError:
 class Application(tk.Frame):
     """Main application class.
     Author: Pavel"""
-    
+
     def __init__(self, master=None):
         super().__init__(master)
         self.pack()
@@ -40,7 +40,7 @@ class Application(tk.Frame):
         remove_button = Button(self.toolbar, command=self.remove_items)
         remove_button["text"] = "-"
         remove_button.pack(side=LEFT, padx=2, pady=2)
-        
+
         edit_button = Button(self.toolbar, command=self.edit_item)
         edit_button["text"] = "Edit"
         edit_button.pack(side=LEFT, padx=2, pady=2)
@@ -82,11 +82,10 @@ class Application(tk.Frame):
     def edit_item(self):
         """A method to open "Edit entry" dialog
         Author: Pavel"""
-        
         edit_indexes = self.table.curselection()
         if not edit_indexes:
             return
-        self.edit_index = edit_indexes [0]
+        self.edit_index = edit_indexes[0]
         item = self.table.get(self.edit_index)
         item = list(db_find_strict(DB, dict(zip(db_get_keys(DB), item))).values())[0]
         print(item)
@@ -94,7 +93,7 @@ class Application(tk.Frame):
         t.wm_title("Add track to DB")
         l = InsertionFrame(t, self, DB, item)
         l.pack(side="top", fill="both", expand=True)
-        
+
     def add_item(self):
         """A simple method to add entry
         Author: Andrew"""
@@ -108,7 +107,7 @@ class Application(tk.Frame):
         Author: Pavel"""
         stats_window = tk.Toplevel(self)
         stats_window.wm_title("Stats")
-        stats_frame = StatsFrame(stats_window, self.FILTERED_DB)
+        stats_frame = StatsFrame(stats_window, self.filtered_db)
         stats_frame.pack(side=TOP, fill=BOTH, expand=True)
 
     def insert_item(self, item, prev_item):
@@ -122,25 +121,25 @@ class Application(tk.Frame):
             where = self.edit_index
         db_add_entry(DB, item)
         self.table.insert(where, tuple(item.values()))
-    
+
     def create_filters(self):
         """Create filter
         Author: Pavel
         """
         filter_window = tk.Toplevel(self)
         filter_window.wm_title("Add filters")
-        filter_frame = FilterFrame(filter_window, self,  DB)
+        filter_frame = FilterFrame(filter_window, self, DB)
         filter_frame.pack(side=TOP, fill=BOTH, expand=True)
-        
-    
+
+
     def apply_db(self, data):
         """Display db
         Author: Pavel"""
-        self.FILTERED_DB = data
+        self.filtered_db = data
         self.table.delete(0, END)
         for i in data.values():
             self.table.insert(END, tuple(i.values()))
-            
+
 ROOT = tk.Tk()
 ROOT.title('MYSQL killer for music')
 APP = Application(master=ROOT)
