@@ -86,6 +86,15 @@ def db_find_strict(database, params):
             found[current_entry] = database[current_entry]
     return found
 
+def db_find_by_substr(database, key, substr):
+    """Search for entries with key matching substr
+    Author: Pavel"""
+    found = []
+    for current_entry in database:
+        if substr in database[current_entry][key]:
+            found.append(database[current_entry])
+    return found
+
 def db_list_greater_than(database, param, value):
     """ This function lists all the entries with 'param' value is greater
         than the given value
@@ -98,7 +107,23 @@ def db_list_greater_than(database, param, value):
     """
     found = [] #This list will store all the matching entries
     for current_entry in database:
-        if int(database[current_entry][param]) >= value:
+        if int(database[current_entry][param]) > value:
+            found.append(database[current_entry])
+    return found
+
+def db_list_lesser_than(database, param, value):
+    """ This function lists all the entries with 'param' value is lesser
+        than the given value
+        Args:
+            db - database, nothing to comment on :D
+            value - int, to be compared
+            param - param that should be compared against value
+        Returns a list of entries(dics) or an empty list
+        Author: Pavel
+    """
+    found = [] #This list will store all the matching entries
+    for current_entry in database:
+        if int(database[current_entry][param]) < value:
             found.append(database[current_entry])
     return found
 
@@ -187,3 +212,41 @@ def db_most(database, key):
     Author: Pavel"""
     lst = db_keys_to_list(database, key)
     return max(set(lst), key=lst.count)
+
+#Now for filters. DO NOT EDIT unless you're 100% it does not break filter
+    
+def gt(old_db, field, data):
+    """Greater filter
+    Author: Pavel"""
+    new_db = db_create()
+    items = db_list_greater_than(old_db, field, int(data))
+    for i in items:
+        db_add_entry(new_db, i)
+    return new_db
+
+def lt(old_db, field, data):
+    """Lesser filter
+    Author: Pavel"""
+    new_db = db_create()
+    items = db_list_lesser_than(old_db, field, int(data))
+    for i in items:
+        db_add_entry(new_db, i)
+    return new_db
+
+def eq(old_db, field, data):
+    """Equality filter
+    Author: Pavel"""
+    new_db = db_create()
+    items = db_find_strict(old_db, {field : data})
+    for i in items:
+        db_add_entry(new_db, old_db[i])
+    return new_db
+
+def inc(old_db, field, data):
+    """Check if data is a substring of the given field
+    Author: Pavel"""
+    new_db = db_create()
+    items = db_find_by_substr(old_db, field, data)
+    for i in items:
+        db_add_entry(new_db, i)
+    return new_db

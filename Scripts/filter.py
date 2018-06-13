@@ -1,7 +1,9 @@
+"""Filter widget
+Provides FilterFrame class
+Author: Pavel"""
 from tkinter import Frame, SUNKEN, Entry, Button, BOTTOM, OptionMenu, \
     StringVar
-from db import db_get_keys, db_list_greater_than, db_create, db_add_entry, \
-    db_find_strict
+from db import db_get_keys, gt, lt, eq, inc
 class FilterFrame(Frame):
     """
     Author: Pavel
@@ -47,37 +49,12 @@ class FilterFrame(Frame):
         Author: Pavel"""
         new_db = self.database
         for filt in self.filters:
-            field = filt['field'].get()
-            data = filt['data'].get()
-            new_db = self.citeria_dict[filt['criteria'].get()](self, new_db, field, data)
-        print(new_db)
+            criteria = filt['criteria'].get()
+            #If criteria is not empty. Otherwise there is no need to apply it
+            if criteria:
+                field = filt['field'].get()
+                data = filt['data'].get()
+                new_db = self.citeria_dict[criteria](new_db, field, data)
         self.app.apply_db(new_db)
-
-
-    def gt(self, old_db, field, data):
-        new_db = db_create()
-        items = db_list_greater_than(old_db, field, int(data))
-        for i in items:
-            db_add_entry(new_db, i)
-        return new_db
-
-    def lt(self, old_db, field, data):
-        new_db = db_create()
-        items = db_list_greater_than(self.database, field, int(data))
-        for i in items:
-            db_add_entry(new_db, i)
-        return new_db
-
-    def eq(self, old_db, field, data):
-        """Equality filter
-        Author: Pavel"""
-        new_db = db_create()
-        items = db_find_strict(old_db, {field : data})
-        for i in items:
-            db_add_entry(new_db, old_db[i])
-        return new_db
-
-    def inc(self, old_db, field, data):
-        print("INC")
 
     citeria_dict = {"Greater then":gt, "Less then": lt, "Is equal to" : eq, "Includes":inc}

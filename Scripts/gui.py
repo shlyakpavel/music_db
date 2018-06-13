@@ -22,8 +22,6 @@ class Application(tk.Frame):
     """Main application class.
     Author: Pavel"""
     
-    FILTERED_DB = DB
-    
     def __init__(self, master=None):
         super().__init__(master)
         self.pack()
@@ -35,21 +33,21 @@ class Application(tk.Frame):
         Author: Pavel"""
         self.toolbar = Frame(self.master, bd=1, relief=RAISED)
         #A button to add new song
-        self.add_button = Button(self.toolbar, command=self.add_item)
-        self.add_button["text"] = "+"
-        self.add_button.pack(side=LEFT, padx=2, pady=2)
+        add_button = Button(self.toolbar, command=self.add_item)
+        add_button["text"] = "+"
+        add_button.pack(side=LEFT, padx=2, pady=2)
         #A button to remove a song
-        self.remove_button = Button(self.toolbar, command=self.remove_items)
-        self.remove_button["text"] = "-"
-        self.remove_button.pack(side=LEFT, padx=2, pady=2)
+        remove_button = Button(self.toolbar, command=self.remove_items)
+        remove_button["text"] = "-"
+        remove_button.pack(side=LEFT, padx=2, pady=2)
         
-        self.edit_button = Button(self.toolbar, command=self.edit_item)
-        self.edit_button["text"] = "Edit"
-        self.edit_button.pack(side=LEFT, padx=2, pady=2)
+        edit_button = Button(self.toolbar, command=self.edit_item)
+        edit_button["text"] = "Edit"
+        edit_button.pack(side=LEFT, padx=2, pady=2)
 
-        self.search_button = Button(self.toolbar, command=self.create_filters)
-        self.search_button["text"] = "Search"
-        self.search_button.pack(side=LEFT, padx=2, pady=2)
+        search_button = Button(self.toolbar, command=self.create_filters)
+        search_button["text"] = "Search"
+        search_button.pack(side=LEFT, padx=2, pady=2)
 
         self.stats_button = Button(self.toolbar, command=self.stats)
         self.stats_button["text"] = "Stats"
@@ -64,8 +62,7 @@ class Application(tk.Frame):
         keys = ((i, 0) for i in db_get_keys(DB))
         self.table = MultiListbox(ROOT, keys)
         del keys
-        for i in DB.values():
-            self.table.insert(END, tuple(i.values()))
+        self.apply_db(DB)
         self.table.pack(expand=YES, fill=BOTH, side=BOTTOM)
 
     def remove_items(self):
@@ -137,6 +134,8 @@ class Application(tk.Frame):
         
     
     def apply_db(self, data):
+        """Display db
+        Author: Pavel"""
         self.FILTERED_DB = data
         self.table.delete(0, END)
         for i in data.values():
