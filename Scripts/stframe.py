@@ -50,7 +50,7 @@ class StatsFrame(Frame):
         """Counts amount of artists in DB
         Returns amount(int)
         Author: Pavel"""
-        lst = db_keys_to_list(self.database, 'interpreter')
+        lst = db_keys_to_list(self.database, 'artist')
         #Sets cannot have duplicate entries. Thus, we convert list to a set
         lst = set(lst)
         return len(lst)

@@ -10,8 +10,6 @@ class InsertionFrame(Frame):
     prev_item = None
     def __init__(self, master, app, DB, prev_item = None):
         Frame.__init__(self, master, borderwidth=1, relief=SUNKEN)
-        #l = Label(master, text="This is window")
-        #l.pack(side=TOP, fill=BOTH, expand=True)
         self.db = DB
         self.prev_item = prev_item
         #self.e = {}
@@ -29,12 +27,10 @@ class InsertionFrame(Frame):
     def obrabotchik(self):
         """This method is called then button is clicked
         Author: Andrew
-        Edited by Pavel on 12.07
+        Edited by Pavel
         """
         item = {}
         for i in db_get_keys(self.db):
             item[i] = self.e[i].get()
-            #print(self.e[i].get())
-        #mas
         self.app.insert_item(item, self.prev_item)
         
