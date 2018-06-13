@@ -10,6 +10,7 @@ from db import db_get_keys, db_load, db_store, db_find_strict, db_delete_entry, 
     db_create, db_add_entry
 from add_dialog import InsertionFrame
 from stframe import StatsFrame
+from filter import FilterFrame
 
 try:
     DB = db_load("db.pickle")
@@ -42,12 +43,12 @@ class Application(tk.Frame):
         self.edit_button["text"] = "Edit"
         self.edit_button.pack(side=LEFT, padx=2, pady=2)
 
-        self.search_button = Button(self.toolbar, command=ROOT.destroy) #TODO
-        self.search_button["text"] = "Search" #TODO: icon
+        self.search_button = Button(self.toolbar, command=self.create_filters)
+        self.search_button["text"] = "Search"
         self.search_button.pack(side=LEFT, padx=2, pady=2)
 
         self.stats_button = Button(self.toolbar, command=self.stats)
-        self.stats_button["text"] = "Stats" #TODO: icon
+        self.stats_button["text"] = "Stats"
         self.stats_button.pack(side=LEFT, padx=2, pady=2)
 
         #Idk what it is for
@@ -120,6 +121,16 @@ class Application(tk.Frame):
             where = self.edit_index
         db_add_entry(DB, item)
         self.table.insert(where, tuple(item.values()))
+    
+    def create_filters(self):
+        """Create filter
+        Author: Pavel
+        """
+        filter_window = tk.Toplevel(self)
+        filter_window.wm_title("Add filters")
+        filter_frame = FilterFrame(filter_window, self,  DB)
+        filter_frame.pack(side=TOP, fill=BOTH, expand=True)
+        
 
 ROOT = tk.Tk()
 ROOT.title('MYSQL killer for music')
