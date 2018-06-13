@@ -17,9 +17,13 @@ try:
 except FileNotFoundError:
     DB = db_create()
 
+
 class Application(tk.Frame):
     """Main application class.
     Author: Pavel"""
+    
+    FILTERED_DB = DB
+    
     def __init__(self, master=None):
         super().__init__(master)
         self.pack()
@@ -107,7 +111,7 @@ class Application(tk.Frame):
         Author: Pavel"""
         stats_window = tk.Toplevel(self)
         stats_window.wm_title("Stats")
-        stats_frame = StatsFrame(stats_window, DB)
+        stats_frame = StatsFrame(stats_window, self.FILTERED_DB)
         stats_frame.pack(side=TOP, fill=BOTH, expand=True)
 
     def insert_item(self, item, prev_item):
@@ -131,7 +135,13 @@ class Application(tk.Frame):
         filter_frame = FilterFrame(filter_window, self,  DB)
         filter_frame.pack(side=TOP, fill=BOTH, expand=True)
         
-
+    
+    def apply_db(self, data):
+        self.FILTERED_DB = data
+        self.table.delete(0, END)
+        for i in data.values():
+            self.table.insert(END, tuple(i.values()))
+            
 ROOT = tk.Tk()
 ROOT.title('MYSQL killer for music')
 APP = Application(master=ROOT)
