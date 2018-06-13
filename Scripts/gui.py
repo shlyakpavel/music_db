@@ -71,6 +71,7 @@ class Application(tk.Frame):
         items = self.table.curselection()
         for index in items:
             item = self.table.get(index)
+            del item[-1]
             items_in_db = db_find_strict(DB, dict(zip(db_get_keys(DB), item)))
             print(items_in_db)
             for item_in_db in items_in_db:
@@ -87,8 +88,11 @@ class Application(tk.Frame):
             return
         self.edit_index = edit_indexes[0]
         item = self.table.get(self.edit_index)
+        time = item[-1]        
+        del item[-1]    #DURATION
         item = list(db_find_strict(DB, dict(zip(db_get_keys(DB), item))).values())[0]
         print(item)
+        item['duration'] = time
         t = tk.Toplevel(self)
         t.wm_title("Add track to DB")
         l = InsertionFrame(t, self, DB, item)
@@ -119,8 +123,13 @@ class Application(tk.Frame):
             db_delete_entry(DB, to_delete)
             self.table.delete(self.edit_index)
             where = self.edit_index
-        db_add_entry(DB, item)
         self.table.insert(where, tuple(item.values()))
+        secs = 0
+        for a, b in enumerate(reversed(item['duration'].split(':'))):
+            print(a,b)
+            secs += 60**int(a) * int(b)
+        item['duration'] = secs
+        db_add_entry(DB, item)
 
     def create_filters(self):
         """Create filter
@@ -131,14 +140,21 @@ class Application(tk.Frame):
         filter_frame = FilterFrame(filter_window, self, DB)
         filter_frame.pack(side=TOP, fill=BOTH, expand=True)
 
-
     def apply_db(self, data):
         """Display db
         Author: Pavel"""
         self.filtered_db = data
         self.table.delete(0, END)
         for i in data.values():
-            self.table.insert(END, tuple(i.values()))
+            try: 
+                j = dict(i)
+                m, s = divmod(int(i['duration']), 60)
+                h, m = divmod(m, 60)
+                j['duration'] = "%d:%02d:%02d" % (h, m, s)
+            except ValueError:
+                i['duration'] = 0
+                j['duration'] = 0
+            self.table.insert(END, tuple(j.values()))
 
 ROOT = tk.Tk()
 ROOT.title('MYSQL killer for music')
