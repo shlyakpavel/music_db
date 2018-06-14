@@ -213,6 +213,22 @@ def db_most(database, key):
     lst = db_keys_to_list(database, key)
     return max(set(lst), key=lst.count)
 
+def db_dispersion(database, key):
+    """Find the dispersion of elements by the key
+    Author: Pavel
+    """
+    summa = 0
+    amount = 0
+    for value in database.values():
+        summa += int(value[key])**2
+        amount += 1
+    mean_square=summa/amount
+    square_min=db_mean(database,key)**2
+    print(mean_square)
+    print(square_min)
+    dispersion = mean_square - square_min
+    return dispersion
+
 #Now for filters. DO NOT EDIT unless you're 100% it does not break filter
     
 def gt(old_db, field, data):
