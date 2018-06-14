@@ -143,7 +143,7 @@ def db_set_entry_value(database, key, param, value):
     del database[key]
     return unique_id
 
-def db_get_keys(database):
+def db_get_keys(database = None):
     """This function returns all the keys avaible in DataBase
     This should be extremely helpfull in GUI
     Args:
@@ -151,11 +151,11 @@ def db_get_keys(database):
     Returns:
         List of keys
     """
-    all_keys = []
-    for i in database:
-        for j in database[i].keys():
-            if j not in all_keys:
-                all_keys.append(j)
+    all_keys = ['song','artist', 'album','year', 'duration']
+    #for i in database:
+    #    for j in database[i].keys():
+    #        if j not in all_keys:
+    #            all_keys.append(j)
     return all_keys
 
 def db_mean(database, key):

@@ -58,10 +58,11 @@ class Application(tk.Frame):
         exit_button["text"] = "Quit"
         exit_button.pack(side=RIGHT, padx=2, pady=2)
         self.toolbar.pack(side=BOTTOM, fill=X)
-
-        keys = ((i, 0) for i in db_get_keys(DB))
-        self.table = MultiListbox(ROOT, keys)
-        del keys
+        
+        self.keys=db_get_keys()
+        keys_tmp = ((i, 0) for i in self.keys)
+        self.table = MultiListbox(ROOT, keys_tmp)
+        del keys_tmp
         self.apply_db(DB)
         self.table.pack(expand=YES, fill=BOTH, side=BOTTOM)
 
@@ -123,7 +124,10 @@ class Application(tk.Frame):
             db_delete_entry(DB, to_delete)
             self.table.delete(self.edit_index)
             where = self.edit_index
-        self.table.insert(where, tuple(item.values()))
+        res=[]
+        for key in self.keys:
+                res.append(item[key])
+        self.table.insert(where, res)
         secs = 0
         for a, b in enumerate(reversed(item['duration'].split(':'))):
             print(a,b)
@@ -147,14 +151,17 @@ class Application(tk.Frame):
         self.table.delete(0, END)
         for i in data.values():
             try: 
-                j = dict(i)
+                j = i.copy()
                 m, s = divmod(int(i['duration']), 60)
                 h, m = divmod(m, 60)
                 j['duration'] = "%d:%02d:%02d" % (h, m, s)
             except ValueError:
                 i['duration'] = 0
                 j['duration'] = 0
-            self.table.insert(END, tuple(j.values()))
+            res= []
+            for key in self.keys:
+                res.append(j[key])
+            self.table.insert(END, res)
 
 ROOT = tk.Tk()
 ROOT.title('MYSQL killer for music')
