@@ -6,8 +6,16 @@ Created on Thu Jun 13 20:20:11 2018
 
 Здесь будут конфигурации
 """
-Button_color = '#F5F86D'
-Frame_color = '#F0DC82'
-ListBox_color = '#FBE9BC'
-Text_color = '#FF0300'
+
+#Цвет кнопок
+Button_color = '#F3FF7A'
+
+#Цвет главного окна
+Frame_color = '#AFF9A4'
+
+#Цвет ячеек таблицы
+ListBox_color = '#DDD6FF'
+
+#Цвет текста
+Text_color = '#002CFF'
 

@@ -4,10 +4,6 @@ from tkinter import PanedWindow, Frame, Tk, Label, TOP, SUNKEN, LEFT,\
     
 from config import ListBox_color
 
-#def cmp(a, b):
-#    """python 3 replacement for python 2 cmp function"""
-#    return (a > b) - (a < b)
-
 class MultiListbox(PanedWindow):
     """This class is supposed to display a table
     Author: Pavel Shlyak"""
@@ -58,7 +54,6 @@ class MultiListbox(PanedWindow):
         if state == 16:
             self.selection_clear(0, END)
         self.selection_set(row)
-##        print(self.curselection())
         return 'break'
 
 

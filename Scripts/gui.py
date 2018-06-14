@@ -3,6 +3,9 @@ Everything that is drown by our app should be done here
 However, custom widgets can be stored in external modules
 """
 import tkinter as tk
+import sys
+sys.path.append('../Library')
+
 from tkinter import END, BOTH, RIGHT, BOTTOM, LEFT, RAISED, Button, Frame, \
     X, YES, TOP
 from MultiListbox import MultiListbox
@@ -13,8 +16,10 @@ from stframe import StatsFrame
 from filter import FilterFrame
 from config import Button_color, Frame_color, Text_color
 
+DB_PATH = "../Data/db.pickle"
+
 try:
-    DB = db_load("db.pickle")
+    DB = db_load(DB_PATH)
 except FileNotFoundError:
     DB = db_create()
 
@@ -75,10 +80,8 @@ class Application(tk.Frame):
             item = self.table.get(index)
             del item[-1]
             items_in_db = db_find_strict(DB, dict(zip(db_get_keys(DB), item)))
-            print(items_in_db)
             for item_in_db in items_in_db:
                 db_delete_entry(DB, item_in_db)
-                print(item_in_db)
             #search and delete in db
             self.table.delete(index)
 
@@ -93,7 +96,6 @@ class Application(tk.Frame):
         time = item[-1]        
         del item[-1]    #DURATION
         item = list(db_find_strict(DB, dict(zip(db_get_keys(DB), item))).values())[0]
-        print(item)
         item['duration'] = time
         t = tk.Toplevel(self)
         t.wm_title("Add track to DB")
@@ -131,7 +133,6 @@ class Application(tk.Frame):
         self.table.insert(where, res)
         secs = 0
         for a, b in enumerate(reversed(item['duration'].split(':'))):
-            print(a,b)
             secs += 60**int(a) * int(b)
         item['duration'] = secs
         db_add_entry(DB, item)
@@ -168,4 +169,4 @@ ROOT = tk.Tk()
 ROOT.title('MYSQL killer for music')
 APP = Application(master=ROOT)
 APP.mainloop()
-db_store(DB, "db.pickle")
+db_store(DB, DB_PATH)

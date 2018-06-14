@@ -224,8 +224,6 @@ def db_dispersion(database, key):
         amount += 1
     mean_square=summa/amount
     square_min=db_mean(database,key)**2
-    print(mean_square)
-    print(square_min)
     dispersion = mean_square - square_min
     return dispersion
 
