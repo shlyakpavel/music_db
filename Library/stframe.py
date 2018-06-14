@@ -77,7 +77,7 @@ class StatsFrame(Frame):
         """This method is used to save analysis result
         Author: Pavel"""
         filename = hash(str(self.database))
-        path = "../Data/" + str(filename) + ".txt"
+        path = "../Output/" + str(filename) + ".txt"
         file = open(path, "w")
         file.writelines(map(lambda x: x + '\n', self.data))
         file.close()
