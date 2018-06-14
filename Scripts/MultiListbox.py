@@ -1,6 +1,8 @@
 from tkinter import PanedWindow, Frame, Tk, Label, TOP, SUNKEN, LEFT,\
     YES, BOTH, GROOVE, X, Listbox, FLAT, FALSE, MULTIPLE, Scrollbar, VERTICAL,\
     Y, RIGHT, NO, END, SCROLL, PAGES
+    
+from config import ListBox_color
 
 #def cmp(a, b):
 #    """python 3 replacement for python 2 cmp function"""
@@ -16,7 +18,8 @@ class MultiListbox(PanedWindow):
             master - parent view
             lists - columns
         Author: Pavel"""
-        PanedWindow.__init__(self, master, borderwidth=1, showhandle=False, sashwidth=2, sashpad=0, relief=SUNKEN)
+        PanedWindow.__init__(self, master, borderwidth=1, showhandle=False, 
+                             sashwidth=2, sashpad=0, relief=SUNKEN)
         self.lists = []
         self.columns = []
         for l, w in lists:
@@ -26,7 +29,9 @@ class MultiListbox(PanedWindow):
             tl = Label(frame, text=l, borderwidth=2, relief=GROOVE)
             tl.pack(fill=X)
             tl.bind('<Button-1>', self.clickon)
-            lb = Listbox(frame, width=w, borderwidth=0, selectborderwidth=0, relief=FLAT, exportselection=FALSE, selectmode=MULTIPLE, bg='white')
+            lb = Listbox(frame, bg = ListBox_color, width=w, borderwidth=0, 
+                         selectborderwidth=0, relief=FLAT, exportselection=FALSE, 
+                         selectmode=MULTIPLE)
             lb.pack(expand=YES, fill=BOTH)
             self.lists.append(lb)
             lb.bind('<B1-Motion>', lambda e, s=self: s._select(e.y))

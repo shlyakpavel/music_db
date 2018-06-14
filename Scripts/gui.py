@@ -11,6 +11,7 @@ from db import db_get_keys, db_load, db_store, db_find_strict, db_delete_entry, 
 from add_dialog import InsertionFrame
 from stframe import StatsFrame
 from filter import FilterFrame
+from config import Button_color, Frame_color, Text_color
 
 try:
     DB = db_load("db.pickle")
@@ -31,30 +32,30 @@ class Application(tk.Frame):
         """A method to draw the interface
         Should be only called in class constructor
         Author: Pavel"""
-        self.toolbar = Frame(self.master, bd=1, relief=RAISED)
+        self.toolbar = Frame(self.master, bg = Frame_color, bd=1, relief=RAISED)
         #A button to add new song
-        add_button = Button(self.toolbar, command=self.add_item)
+        add_button = Button(self.toolbar, bg = Button_color, fg = Text_color,  command=self.add_item)
         add_button["text"] = "+"
         add_button.pack(side=LEFT, padx=2, pady=2)
         #A button to remove a song
-        remove_button = Button(self.toolbar, command=self.remove_items)
+        remove_button = Button(self.toolbar, bg = Button_color, fg = Text_color, command=self.remove_items)
         remove_button["text"] = "-"
         remove_button.pack(side=LEFT, padx=2, pady=2)
 
-        edit_button = Button(self.toolbar, command=self.edit_item)
+        edit_button = Button(self.toolbar, bg = Button_color, fg = Text_color, command=self.edit_item)
         edit_button["text"] = "Edit"
         edit_button.pack(side=LEFT, padx=2, pady=2)
 
-        search_button = Button(self.toolbar, command=self.create_filters)
+        search_button = Button(self.toolbar, bg = Button_color, fg = Text_color, command=self.create_filters)
         search_button["text"] = "Search"
         search_button.pack(side=LEFT, padx=2, pady=2)
 
-        self.stats_button = Button(self.toolbar, command=self.stats)
+        self.stats_button = Button(self.toolbar, bg = Button_color, fg = Text_color, command=self.stats)
         self.stats_button["text"] = "Stats"
         self.stats_button.pack(side=LEFT, padx=2, pady=2)
 
         #Idk what it is for
-        exit_button = Button(self.toolbar, fg="red", command=ROOT.destroy)
+        exit_button = Button(self.toolbar, bg = Button_color, fg="red", command=ROOT.destroy)
         exit_button["text"] = "Quit"
         exit_button.pack(side=RIGHT, padx=2, pady=2)
         self.toolbar.pack(side=BOTTOM, fill=X)
