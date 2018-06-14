@@ -2,10 +2,10 @@
 Everything that is drown by our app should be done here
 However, custom widgets can be stored in external modules
 """
-import tkinter as tk
 import sys
 sys.path.append('../Library')
 
+import tkinter as tk
 from tkinter import END, BOTH, RIGHT, BOTTOM, LEFT, RAISED, Button, Frame, \
     X, YES, TOP
 from MultiListbox import MultiListbox
@@ -37,35 +37,35 @@ class Application(tk.Frame):
         """A method to draw the interface
         Should be only called in class constructor
         Author: Pavel"""
-        self.toolbar = Frame(self.master, bg = Frame_color, bd=1, relief=RAISED)
+        self.toolbar = Frame(self.master, bg=Frame_color, bd=1, relief=RAISED)
         #A button to add new song
-        add_button = Button(self.toolbar, bg = Button_color, fg = Text_color,  command=self.add_item)
+        add_button = Button(self.toolbar, bg=Button_color, fg=Text_color, command=self.add_item)
         add_button["text"] = "+"
         add_button.pack(side=LEFT, padx=2, pady=2)
         #A button to remove a song
-        remove_button = Button(self.toolbar, bg = Button_color, fg = Text_color, command=self.remove_items)
+        remove_button = Button(self.toolbar, bg=Button_color, fg=Text_color, command=self.remove_items)
         remove_button["text"] = "-"
         remove_button.pack(side=LEFT, padx=2, pady=2)
 
-        edit_button = Button(self.toolbar, bg = Button_color, fg = Text_color, command=self.edit_item)
+        edit_button = Button(self.toolbar, bg=Button_color, fg=Text_color, command=self.edit_item)
         edit_button["text"] = "Edit"
         edit_button.pack(side=LEFT, padx=2, pady=2)
 
-        search_button = Button(self.toolbar, bg = Button_color, fg = Text_color, command=self.create_filters)
+        search_button = Button(self.toolbar, bg=Button_color, fg=Text_color, command=self.create_filters)
         search_button["text"] = "Search"
         search_button.pack(side=LEFT, padx=2, pady=2)
 
-        self.stats_button = Button(self.toolbar, bg = Button_color, fg = Text_color, command=self.stats)
+        self.stats_button = Button(self.toolbar, bg=Button_color, fg=Text_color, command=self.stats)
         self.stats_button["text"] = "Stats"
         self.stats_button.pack(side=LEFT, padx=2, pady=2)
 
         #Idk what it is for
-        exit_button = Button(self.toolbar, bg = Button_color, fg="red", command=ROOT.destroy)
+        exit_button = Button(self.toolbar, bg=Button_color, fg="red", command=ROOT.destroy)
         exit_button["text"] = "Quit"
         exit_button.pack(side=RIGHT, padx=2, pady=2)
         self.toolbar.pack(side=BOTTOM, fill=X)
-        
-        self.keys=db_get_keys()
+
+        self.keys = db_get_keys()
         keys_tmp = ((i, 0) for i in self.keys)
         self.table = MultiListbox(ROOT, keys_tmp)
         del keys_tmp
@@ -93,7 +93,7 @@ class Application(tk.Frame):
             return
         self.edit_index = edit_indexes[0]
         item = self.table.get(self.edit_index)
-        time = item[-1]        
+        time = item[-1]
         del item[-1]    #DURATION
         item = list(db_find_strict(DB, dict(zip(db_get_keys(DB), item))).values())[0]
         item['duration'] = time
@@ -127,9 +127,9 @@ class Application(tk.Frame):
             db_delete_entry(DB, to_delete)
             self.table.delete(self.edit_index)
             where = self.edit_index
-        res=[]
+        res = []
         for key in self.keys:
-                res.append(item[key])
+            res.append(item[key])
         self.table.insert(where, res)
         secs = 0
         for a, b in enumerate(reversed(item['duration'].split(':'))):
@@ -152,7 +152,7 @@ class Application(tk.Frame):
         self.filtered_db = data
         self.table.delete(0, END)
         for i in data.values():
-            try: 
+            try:
                 j = i.copy()
                 m, s = divmod(int(i['duration']), 60)
                 h, m = divmod(m, 60)
@@ -160,7 +160,7 @@ class Application(tk.Frame):
             except ValueError:
                 i['duration'] = 0
                 j['duration'] = 0
-            res= []
+            res = []
             for key in self.keys:
                 res.append(j[key])
             self.table.insert(END, res)

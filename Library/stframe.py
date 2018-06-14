@@ -3,6 +3,7 @@ This module provides a class for gathering and displaying statistics
 Author: Pavel
 Maintainer: Pavel
 """
+
 from tkinter import Frame, SUNKEN, Label, Button, TOP, BOTH
 from db import db_mean, db_max, db_min, db_most, db_keys_to_list, \
     db_dispersion

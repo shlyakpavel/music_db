@@ -4,7 +4,7 @@ Author: Pavel"""
 from tkinter import Frame, SUNKEN, Entry, Button, BOTTOM, OptionMenu, \
     StringVar
 from db import db_get_keys, gt, lt, eq, inc
-from config import Button_color, Frame_color, Text_color
+from config import Button_color, Text_color
 class FilterFrame(Frame):
     """
     Author: Pavel
