@@ -58,7 +58,13 @@ class FilterFrame(Frame):
             #If criteria is not empty. Otherwise there is no need to apply it
             if criteria:
                 field = filt['field'].get()
-                data = filt['data'].get()
+                if field == 'duration':
+                    secs = 0
+                    for a, b in enumerate(reversed(filt['data'].get().split(':'))):
+                        secs += 60**int(a) * int(b)
+                    data = secs
+                else:
+                    data = filt['data'].get()
                 new_db = self.citeria_dict[criteria](new_db, field, data)
         self.app.apply_db(new_db)
 

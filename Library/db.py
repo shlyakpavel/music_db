@@ -107,7 +107,7 @@ def db_list_greater_than(database, param, value):
     """
     found = [] #This list will store all the matching entries
     for current_entry in database:
-        if int(database[current_entry][param]) > value:
+        if database[current_entry][param] > value:
             found.append(database[current_entry])
     return found
 
@@ -123,7 +123,7 @@ def db_list_lesser_than(database, param, value):
     """
     found = [] #This list will store all the matching entries
     for current_entry in database:
-        if int(database[current_entry][param]) < value:
+        if database[current_entry][param] < value:
             found.append(database[current_entry])
     return found
 
@@ -233,7 +233,7 @@ def gt(old_db, field, data):
     """Greater filter
     Author: Pavel"""
     new_db = db_create()
-    items = db_list_greater_than(old_db, field, int(data))
+    items = db_list_greater_than(old_db, field, data)
     for i in items:
         db_add_entry(new_db, i)
     return new_db
@@ -242,7 +242,7 @@ def lt(old_db, field, data):
     """Lesser filter
     Author: Pavel"""
     new_db = db_create()
-    items = db_list_lesser_than(old_db, field, int(data))
+    items = db_list_lesser_than(old_db, field, data)
     for i in items:
         db_add_entry(new_db, i)
     return new_db

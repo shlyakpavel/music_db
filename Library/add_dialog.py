@@ -13,7 +13,6 @@ class InsertionFrame(Frame):
         Frame.__init__(self, master, borderwidth=1, relief=SUNKEN, bg = Frame_color)
         self.db = DB
         self.prev_item = prev_item
-        #self.e = {}
         for i in db_get_keys(self.db):
             l = Label(master, text=i, fg = Text_color)
             l.pack(side=TOP, fill="none", expand=False)
@@ -24,6 +23,7 @@ class InsertionFrame(Frame):
         add_button=Button(master, text="Save", command=self.obrabotchik, bg = Button_color, fg = Text_color)
         add_button.pack(side=TOP, fill="none", expand=False)
         self.app = app
+        self.master = master
 
     def obrabotchik(self):
         """This method is called then button is clicked
@@ -33,5 +33,7 @@ class InsertionFrame(Frame):
         item = {}
         for i in db_get_keys(self.db):
             item[i] = self.e[i].get()
-        self.app.insert_item(item, self.prev_item)
+        if (item['year'].isdecimal()) and item['duration']:
+            self.app.insert_item(item, self.prev_item)
+            self.master.destroy()
 
