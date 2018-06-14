@@ -43,6 +43,7 @@ class MultiListbox(PanedWindow):
         sb.pack(fill=Y, side=RIGHT, expand=NO)
         for l in self.lists:
             l['yscrollcommand'] = sb.set
+            l.bind("<MouseWheel>", lambda e, s=self: s._scroll(SCROLL, e.delta, UNITS))
         #self.add(frame)
         self.pack(expand=YES, fill=BOTH)
         self.sorted_by = -1
