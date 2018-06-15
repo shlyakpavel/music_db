@@ -70,4 +70,4 @@ class FilterFrame(Frame):
                 new_db = self.citeria_dict[criteria](new_db, field, data)
         self.app.apply_db(new_db)
 
-    citeria_dict = {">":gt, "<": lt, "=" : eq, "Includes":inc}
+    citeria_dict = {">":gt, "<": lt, "=" : eq, "contains":inc}
