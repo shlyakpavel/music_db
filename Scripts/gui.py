@@ -7,7 +7,7 @@ sys.path.append('../Library')
 
 import tkinter as tk
 from tkinter import END, BOTH, RIGHT, BOTTOM, LEFT, RAISED, Button, Frame, \
-    X, YES, TOP
+    X, YES, TOP, DISABLED, NORMAL
 from MultiListbox import MultiListbox
 from db import db_get_keys, db_load, db_store, db_find_strict, db_delete_entry, \
     db_create, db_add_entry
@@ -55,9 +55,13 @@ class Application(tk.Frame):
         search_button["text"] = "Search"
         search_button.pack(side=LEFT, padx=2, pady=2)
 
-        self.stats_button = Button(self.toolbar, bg=Button_color, fg=Text_color, command=self.stats)
-        self.stats_button["text"] = "Stats"
-        self.stats_button.pack(side=LEFT, padx=2, pady=2)
+        stats_button = Button(self.toolbar, bg=Button_color, fg=Text_color, command=self.stats)
+        stats_button["text"] = "Stats"
+        stats_button.pack(side=LEFT, padx=2, pady=2)
+        
+        self.reset_button = Button(self.toolbar, bg=Button_color, fg=Text_color, command=self.reset_db)
+        self.reset_button["text"] = "Reset filters"
+        self.reset_button.pack(side=LEFT, padx=2, pady=2)
 
         #Idk what it is for
         exit_button = Button(self.toolbar, bg=Button_color, fg="red", command=ROOT.destroy)
@@ -69,7 +73,7 @@ class Application(tk.Frame):
         keys_tmp = ((i, 0) for i in self.keys)
         self.table = MultiListbox(ROOT, keys_tmp)
         del keys_tmp
-        self.apply_db(DB)
+        self.apply_db(DB, True)
         self.table.pack(expand=YES, fill=BOTH, side=BOTTOM)
 
     def remove_items(self):
@@ -146,9 +150,13 @@ class Application(tk.Frame):
         filter_frame = FilterFrame(filter_window, self, DB)
         filter_frame.pack(side=TOP, fill=BOTH, expand=True)
 
-    def apply_db(self, data):
+    def apply_db(self, data, clear = False):
         """Display db
         Author: Pavel"""
+        if clear:
+            self.reset_button['state'] = DISABLED
+        else:
+            self.reset_button['state'] = NORMAL
         self.filtered_db = data
         self.table.delete(0, END)
         for i in data.values():
@@ -164,6 +172,11 @@ class Application(tk.Frame):
             for key in self.keys:
                 res.append(j[key])
             self.table.insert(END, res)
+    def reset_db(self):
+        self.filtered_db = DB
+        self.apply_db(self.filtered_db, True)
+        
+        
 
 ROOT = tk.Tk()
 ROOT.title('MYSQL killer for music')
