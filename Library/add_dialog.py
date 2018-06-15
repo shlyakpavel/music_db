@@ -1,4 +1,4 @@
-from tkinter import Frame, SUNKEN, Label, Entry, Button, TOP
+from tkinter import Frame, SUNKEN, Label, Entry, Button, TOP, BOTH
 from db import db_get_keys
 from config import Button_color, Frame_color, Text_color
 class InsertionFrame(Frame):
@@ -14,14 +14,14 @@ class InsertionFrame(Frame):
         self.db = DB
         self.prev_item = prev_item
         for i in db_get_keys(self.db):
-            l = Label(master, text=i, fg=Text_color)
-            l.pack(side=TOP, fill="none", expand=False)
-            self.e[i] = Entry(master)
-            self.e[i].pack(side=TOP, fill="none", expand=False)
+            l = Label(self, text=i, fg=Text_color)
+            l.pack(side=TOP, fill=BOTH, expand=True)
+            self.e[i] = Entry(self)
+            self.e[i].pack(side=TOP, fill=BOTH, expand=True)
             if prev_item:
                 self.e[i].insert(0,prev_item[i])
-        add_button=Button(master, text="Save", command=self.obrabotchik, bg=Button_color, fg=Text_color)
-        add_button.pack(side=TOP, fill="none", expand=False)
+        add_button=Button(self, text="Save", command=self.obrabotchik, bg=Button_color, fg=Text_color)
+        add_button.pack(side=TOP, fill=BOTH, expand=True)
         self.app = app
         self.master = master
 
