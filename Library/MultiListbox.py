@@ -1,6 +1,6 @@
 from tkinter import PanedWindow, Frame, Tk, Label, TOP, SUNKEN, LEFT,\
     YES, BOTH, GROOVE, X, Listbox, FLAT, FALSE, MULTIPLE, Scrollbar, VERTICAL,\
-    Y, RIGHT, NO, END, SCROLL, PAGES
+    Y, RIGHT, NO, END, SCROLL, PAGES, UNITS
     
 from config import ListBox_color
 
