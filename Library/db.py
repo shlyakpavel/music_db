@@ -143,7 +143,7 @@ def db_set_entry_value(database, key, param, value):
     del database[key]
     return unique_id
 
-def db_get_keys(database = None):
+def db_get_keys(database=None):
     """This function returns all the keys avaible in DataBase
     This should be extremely helpfull in GUI
     Args:
@@ -151,7 +151,7 @@ def db_get_keys(database = None):
     Returns:
         List of keys
     """
-    all_keys = ['song','artist', 'album','year', 'duration']
+    all_keys = ['song', 'artist', 'album', 'year', 'duration']
     #for i in database:
     #    for j in database[i].keys():
     #        if j not in all_keys:
@@ -222,13 +222,13 @@ def db_dispersion(database, key):
     for value in database.values():
         summa += int(value[key])**2
         amount += 1
-    mean_square=summa/amount
-    square_min=db_mean(database,key)**2
+    mean_square = summa/amount
+    square_min = db_mean(database, key)**2
     dispersion = mean_square - square_min
     return dispersion
 
 #Now for filters. DO NOT EDIT unless you're 100% it does not break filter
-    
+
 def gt(old_db, field, data):
     """Greater filter
     Author: Pavel"""

@@ -17,9 +17,11 @@ class FilterFrame(Frame):
         Frame.__init__(self, master, borderwidth=1, relief=SUNKEN)
         self.database = DB
         self.master = master
-        add_button = Button(master, text="+", command=self.draw_filter, bg = Button_color, fg = Text_color)
+        add_button = Button(master, text="+", command=self.draw_filter, \
+                            bg=Button_color, fg=Text_color)
         add_button.pack(side=BOTTOM, fill="none", expand=False)
-        apply_button = Button(master, text="apply", command=self.apply, bg = Button_color, fg = Text_color)
+        apply_button = Button(master, text="apply", command=self.apply, \
+                              bg=Button_color, fg=Text_color)
         apply_button.pack(side=BOTTOM, fill="none", expand=False)
         self.draw_filter()
         self.app = app
